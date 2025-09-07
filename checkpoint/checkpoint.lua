@@ -17,7 +17,7 @@
 -- 
 --     3. This notice may not be removed or altered from any source distribution.
 
--- https://github.com/klaleus/library-defold-checkpoint
+-- https://github.com/klaleus/defold-checkpoint
 
 local m_checkpoint = {}
 

@@ -33,7 +33,7 @@ Note that some data formats only support a subset of structures. For example, wr
 ## Installation
 
 Add Checkpoint as a dependency in your `game.project` file:  
-https://github.com/klaleus/library-defold-checkpoint/archive/main.zip
+https://github.com/klaleus/defold-checkpoint/archive/main.zip
 
 Add Lua File System as a dependency in your `game.project` file:  
 https://github.com/britzl/defold-lfs/archive/master.zip

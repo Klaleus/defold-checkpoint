@@ -16,7 +16,7 @@ input_method = HiddenInputField
 scale_mode = stretch
 
 [project]
-title = library-defold-checkpoint
+title = defold-checkpoint
 
 [library]
 include_dirs = checkpoint
