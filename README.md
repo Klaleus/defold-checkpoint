@@ -38,12 +38,18 @@ https://github.com/klaleus/defold-checkpoint/archive/main.zip
 Add Lua File System as a dependency in your `game.project` file:  
 https://github.com/britzl/defold-lfs/archive/master.zip
 
-Require `checkpoint.lua` in any script or module:  
-`local m_checkpoint = require("checkpoint.checkpoint")`
+Require *checkpoint.lua* in any script or module:  
+`local checkpoint = require("checkpoint.checkpoint")`
 
 ## Minimal API Reference
 
 ```lua
+-- Contains the project title from your game.project file.
+checkpoint.project_title
+
+-- Contains the path to your project's root save directory.
+checkpoint.project_save_path
+
 -- Writes data to a file.
 local success, err = checkpoint.write(path, data)
 
@@ -84,7 +90,7 @@ If the file does not exist, then it will be created, along with its entire direc
 local path = "profiles/klaleus/data.myformat"
 local data = { coordinates = vmath.vector3(7, 4, 7) }
 
-local success, err = m_checkpoint.write(path, data)
+local success, err = checkpoint.write(path, data)
 ```
 
 ```lua
@@ -94,7 +100,7 @@ local success, err = m_checkpoint.write(path, data)
 local path = "profiles/klaleus/data.json"
 local data = { x = 7, y = 4, z = 7 }
 
-local success, err = m_checkpoint.write(path, data)
+local success, err = checkpoint.write(path, data)
 ```
 
 ---
@@ -116,7 +122,7 @@ Reads data from a file.
 
 ```lua
 local path = "settings.json"
-local data, err = m_checkpoint.read(path)
+local data, err = checkpoint.read(path)
 ```
 
 ---
@@ -143,10 +149,12 @@ Checks if a file or directory exists.
 local path = "settings.json"
 local default_data = { fullscreen = true }
 
-if m_checkpoint.exists(path) then
-    local data, err = m_checkpoint.read(path)
+if checkpoint.exists(path) then
+    local data, err = checkpoint.read(path)
+    ...
 else
-    local success, err = m_checkpoint.write(path, default_data)
+    local success, err = checkpoint.write(path, default_data)
+    ...
 end
 ```
 
@@ -172,7 +180,7 @@ Lists all files under the root save directory.
 --     levels/
 --         level_1.map
 --
--- Calling `m_checkpoint.list()` returns:
+-- Calling `checkpoint.list()` returns:
 --
 -- {
 --     "settings.json",
@@ -180,11 +188,11 @@ Lists all files under the root save directory.
 --     "levels/level_1.map"
 -- }
 
-local paths = m_checkpoint.list()
+local paths = checkpoint.list()
 
 for i = 1, #paths do
     local path = paths[i]
-    local data, err = m_checkpoint.read(path)
+    local data, err = checkpoint.read(path)
     ...
 end
 ```
