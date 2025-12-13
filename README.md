@@ -2,8 +2,6 @@
 
 Checkpoint is a simple library for writing and reading data to and from files in a Defold game engine project.
 
-Please click the ☆ button on GitHub if this repository is useful. Thank you!
-
 ![Checkpoint Thumbnail](https://github.com/user-attachments/assets/147fcb2e-84ad-407b-bd1e-39722a3d54f1)
 
 ## Introduction
