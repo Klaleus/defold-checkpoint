@@ -2,8 +2,6 @@
 
 Checkpoint is a simple library for writing and reading data to and from files in a Defold game engine project.
 
-![Checkpoint Thumbnail](https://github.com/user-attachments/assets/147fcb2e-84ad-407b-bd1e-39722a3d54f1)
-
 ## Introduction
 
 There are many libraries available that more or less perform these ubiquitous file-related operations. Checkpoint differentiates itself by focusing on an extremely simple API, and perhaps more importantly, its ability to work with directory hierarchies rather than bloating one directory with multiple unrelated files.
