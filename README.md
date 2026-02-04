@@ -28,10 +28,10 @@ Note that some data formats only support a subset of structures. For example, wr
 
 ## Installation
 
-Add Checkpoint as a dependency in your `game.project` file:  
+Add Checkpoint as a dependency in your *game.project* file:  
 https://github.com/klaleus/defold-checkpoint/archive/main.zip
 
-Add Lua File System as a dependency in your `game.project` file:  
+Add Lua File System as a dependency in your *game.project* file:  
 https://github.com/britzl/defold-lfs/archive/master.zip
 
 Require *checkpoint.lua* in any script or module:  
@@ -43,7 +43,7 @@ Require *checkpoint.lua* in any script or module:
 -- Contains the project title from your game.project file.
 checkpoint.project_title
 
--- Contains the path to your project's root save directory.
+-- Contains the path to your root save directory.
 checkpoint.project_save_path
 
 -- Writes data to a file.
@@ -69,28 +69,28 @@ If the file does not exist, then it will be created, along with its entire direc
 
 **Parameters**
 
-* `path` Relative path from the root save directory.
-* `data` Data table.
+* `path: string` Relative path from the root save directory.
+* `data: table`
 
 **Returns**
 
-* `true` on success.
-* `false` and an error `string` on failure.
+* `boolean` Success or failure.
+* `string` Error string.
 
 **Example**
 
 ```lua
--- Writing a `vmath.vector3()` to a `.myformat` file is valid,
+-- Writing a `vmath.vector3()` to a .bin file is valid,
 -- since that file extension defaults to binary data.
 
-local path = "profiles/klaleus/data.myformat"
+local path = "profiles/klaleus/data.bin"
 local data = { coordinates = vmath.vector3(7, 4, 7) }
 
 local success, err = checkpoint.write(path, data)
 ```
 
 ```lua
--- Writing a `vmath.vector3()` to a `.json` file is invalid,
+-- Writing a `vmath.vector3()` to a .json file is invalid,
 -- so we need to break it down into Lua primitives.
 
 local path = "profiles/klaleus/data.json"
@@ -107,12 +107,12 @@ Reads data from a file.
 
 **Parameters**
 
-* `path` Relative path from the root save directory.
+* `path: string` Relative path from the root save directory.
 
 **Returns**
 
-* `table` on success.
-* `false` and an error `string` on failure.
+* `boolean` Success or failure.
+* `string` Error string.
 
 **Example**
 
@@ -129,7 +129,7 @@ Checks if a file or directory exists.
 
 **Parameters**
 
-* `path` Relative path from the root save directory.
+* `path: string` Relative path from the root save directory.
 
 **Returns**
 
@@ -147,10 +147,10 @@ local default_data = { fullscreen = true }
 
 if checkpoint.exists(path) then
     local data, err = checkpoint.read(path)
-    ...
+    -- Configure game using `data` table.
 else
     local success, err = checkpoint.write(path, default_data)
-    ...
+    -- Configure game using `default_data` table.
 end
 ```
 
@@ -174,9 +174,9 @@ Lists all files under the root save directory.
 --     profiles/
 --         klaleus.json
 --     levels/
---         level_1.map
+--         level_1.bin
 --
--- Calling `checkpoint.list()` returns:
+-- Calling `checkpoint.list()` returns the following table:
 --
 -- {
 --     "settings.json",
@@ -189,6 +189,8 @@ local paths = checkpoint.list()
 for i = 1, #paths do
     local path = paths[i]
     local data, err = checkpoint.read(path)
-    ...
+
+    -- Do something with loaded data.
+    -- For example, regex `path` based on file extension to load only level data.
 end
 ```
