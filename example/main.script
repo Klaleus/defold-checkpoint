@@ -1,0 +1,19 @@
+local _checkpoint_module = require("checkpoint.checkpoint")
+
+function init()
+	pprint("List file paths:")
+	pprint(_checkpoint_module.list())
+
+	pprint("Read from time.bin file:")
+	pprint(_checkpoint_module.read("dir_1/dir_2/time.bin"))
+	pprint("Read from time.json file:")
+	pprint(_checkpoint_module.read("dir_1/dir_2/time.json"))
+
+	local time = socket.gettime()
+	pprint("Write to time.bin file: " .. time)
+	pprint(_checkpoint_module.write("dir_1/dir_2/time.bin", { time = time }))
+	pprint("Write to time.json file: " .. time)
+	pprint(_checkpoint_module.write("dir_1/dir_2/time.json", { time = time }))
+
+	pprint("Restart to see changes")
+end

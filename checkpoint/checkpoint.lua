@@ -120,7 +120,7 @@ function _checkpoint_module.read(path)
 		file.close(file)
 		if not text then
 			-- Unfortunately `file.read()` doesn't return an error string.
-			return false, "Failed to read file: " .. path
+			return false, absolute_path .. ": Failed to read file"
 		end
 
 		local success, data = pcall(json.decode, text)
@@ -130,7 +130,14 @@ function _checkpoint_module.read(path)
 
 		return data
 
-	else -- Handle binary files, which is the default case.
+	-- Handle binary files, which is the default case.
+	else
+		-- Check if the file exists manually.
+		-- Otherwise, `sys.load()` returns an empty table instead of an error string.
+		if not _checkpoint_module.exists(path) then
+			return false, absolute_path .. ": No such file or directory"
+		end
+
 		local success, data = pcall(sys.load, absolute_path)
 		if not success then
 			return false, data

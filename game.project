@@ -1,5 +1,5 @@
 [bootstrap]
-main_collection = /main/main.collectionc
+main_collection = /example/main.collectionc
 
 [script]
 shared_state = 1
@@ -17,7 +17,11 @@ scale_mode = stretch
 
 [project]
 title = defold-checkpoint
+dependencies#0 = https://github.com/britzl/defold-lfs/archive/master.zip
 
 [library]
 include_dirs = checkpoint
+
+[input]
+game_binding = /builtins/input/all.input_bindingc
 
