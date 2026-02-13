@@ -181,7 +181,7 @@ Lists all files under the root save directory.
 -- {
 --     "settings.json",
 --     "profiles/klaleus.json",
---     "levels/level_1.map"
+--     "levels/level_1.bin"
 -- }
 
 local paths = checkpoint.list()
