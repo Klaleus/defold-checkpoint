@@ -1,6 +1,6 @@
 # Checkpoint
 
-Checkpoint is a simple library for writing and reading data to and from files in a Defold game engine project.
+Checkpoint is a library for reading from and writing to files in a Defold game engine project.
 
 ## Introduction
 
@@ -17,7 +17,7 @@ Each operating system has its own preferences for where applications should stor
 
 Checkpoint was only tested on the above platforms. Testing and contributions for other platforms are welcome and appreciated.
 
-By default, data written to and read from files is interpretted in binary mode. Some file extensions are recognized as non-binary data, and will be interpretted accordingly:
+By default, data read from and written to files is interpretted in binary mode. Some file extensions are recognized as non-binary data, and will be interpretted accordingly:
 
 | File Extension | Interpretation |
 | -------------- | -------------- |
@@ -46,11 +46,11 @@ checkpoint.project_title
 -- Contains the path to your root save directory.
 checkpoint.project_save_path
 
--- Writes data to a file.
-local success, err = checkpoint.write(path, data)
-
 -- Reads data from a file.
 local data, err = checkpoint.read(path)
+
+-- Writes data to a file.
+local success, err = checkpoint.write(path, data)
 
 -- Checks if a file or directory exists.
 local exists = checkpoint.exists(path)
@@ -60,6 +60,28 @@ local paths = checkpoint.list()
 ```
 
 ## Comprehensive API Reference
+
+### checkpoint.read(path)
+
+Reads data from a file.
+
+**Parameters**
+
+* `path: string` Relative path from the root save directory.
+
+**Returns**
+
+* `boolean` Success or failure.
+* `string` Error string.
+
+**Example**
+
+```lua
+local path = "settings.json"
+local data, err = checkpoint.read(path)
+```
+
+---
 
 ### checkpoint.write(path, data)
 
@@ -97,28 +119,6 @@ local path = "profiles/klaleus/data.json"
 local data = { x = 7, y = 4, z = 7 }
 
 local success, err = checkpoint.write(path, data)
-```
-
----
-
-### checkpoint.read(path)
-
-Reads data from a file.
-
-**Parameters**
-
-* `path: string` Relative path from the root save directory.
-
-**Returns**
-
-* `boolean` Success or failure.
-* `string` Error string.
-
-**Example**
-
-```lua
-local path = "settings.json"
-local data, err = checkpoint.read(path)
 ```
 
 ---

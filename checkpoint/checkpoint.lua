@@ -32,6 +32,47 @@ local _project_title = _checkpoint_module.project_title
 _checkpoint_module.project_save_path = sys.get_save_file(_project_title, "")
 local _project_save_path = _checkpoint_module.project_save_path
 
+function _checkpoint_module.read(path)
+	local absolute_path = sys.get_save_file(_project_title, path)
+
+	-- Handle JSON files.
+	if string.match(path, "%.json$") then
+		local file, err = io.open(absolute_path, "r")
+		if not file then
+			return false, err
+		end
+
+		local text = file.read(file, "*a")
+		file.close(file)
+		if not text then
+			-- Unfortunately `file.read()` doesn't return an error string.
+			return false, absolute_path .. ": Failed to read file"
+		end
+
+		local success, data = pcall(json.decode, text)
+		if not success then
+			return false, data
+		end
+
+		return data
+
+	-- Handle binary files, which is the default case.
+	else
+		-- Check if the file exists manually.
+		-- Otherwise, `sys.load()` returns an empty table instead of an error string.
+		if not _checkpoint_module.exists(path) then
+			return false, absolute_path .. ": No such file or directory"
+		end
+
+		local success, data = pcall(sys.load, absolute_path)
+		if not success then
+			return false, data
+		end
+
+		return data
+	end
+end
+
 -- Example: /home/klaleus/.local/share/defold-checkpoint/dir_1/dir_2/file.txt
 --          Create directories: dir_1, dir_2
 local function create_directories(path)
@@ -96,7 +137,8 @@ function _checkpoint_module.write(path, data)
 		file.flush(file)
 		file.close(file)
 
-	else -- Handle binary files, which is the default case.
+	-- Handle binary files, which is the default case.
+	else
 		local success, err = pcall(sys.save, absolute_path, data)
 		if not success then
 			return false, err
@@ -104,47 +146,6 @@ function _checkpoint_module.write(path, data)
 	end
 
 	return true
-end
-
-function _checkpoint_module.read(path)
-	local absolute_path = sys.get_save_file(_project_title, path)
-
-	-- Handle JSON files.
-	if string.match(path, "%.json$") then
-		local file, err = io.open(absolute_path, "r")
-		if not file then
-			return false, err
-		end
-
-		local text = file.read(file, "*a")
-		file.close(file)
-		if not text then
-			-- Unfortunately `file.read()` doesn't return an error string.
-			return false, absolute_path .. ": Failed to read file"
-		end
-
-		local success, data = pcall(json.decode, text)
-		if not success then
-			return false, data
-		end
-
-		return data
-
-	-- Handle binary files, which is the default case.
-	else
-		-- Check if the file exists manually.
-		-- Otherwise, `sys.load()` returns an empty table instead of an error string.
-		if not _checkpoint_module.exists(path) then
-			return false, absolute_path .. ": No such file or directory"
-		end
-
-		local success, data = pcall(sys.load, absolute_path)
-		if not success then
-			return false, data
-		end
-
-		return data
-	end
 end
 
 function _checkpoint_module.exists(path)

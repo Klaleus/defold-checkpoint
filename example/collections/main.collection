@@ -1,6 +1,6 @@
 name: "main"
 instances {
   id: "main"
-  prototype: "/example/main.go"
+  prototype: "/example/objects/main.go"
 }
 scale_along_z: 0
