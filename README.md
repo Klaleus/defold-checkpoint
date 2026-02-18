@@ -6,16 +6,7 @@ Checkpoint is a library for reading from and writing to files in a Defold game e
 
 There are many libraries available that more or less perform these ubiquitous file-related operations. Checkpoint differentiates itself by focusing on an extremely simple API, and perhaps more importantly, its ability to work with directory hierarchies rather than bloating one directory with multiple unrelated files.
 
-In order to work with the user's file system, Checkpoint depends on the [Lua File System](https://github.com/britzl/defold-lfs) library.
-
-Each operating system has its own preferences for where applications should store data. Checkpoint prepends the following root save directories to any paths specified by the user:
-
-| OS      | Path                                                     |
-| ------- | -------------------------------------------------------- |
-| Windows | C:\\Users\\\<user>\\AppData\\Roaming\\\<project_title>\\ |
-| Linux   | /home/\<user>/.local/share/\<project_title>/             |
-
-Checkpoint was only tested on the above platforms. Testing and contributions for other platforms are welcome and appreciated.
+In order to work with the user's file system, Checkpoint depends on the [Lua File System](https://github.com/britzl/defold-lfs) library. See Defold's `sys.get_save_file()` [documentation](https://defold.com/ref/stable/sys/#sys.get_save_file:application_id-file_name) for details on where each operating system prefers to store application data.
 
 By default, data read from and written to files is interpretted in binary mode. Some file extensions are recognized as non-binary data, and will be interpretted accordingly:
 
