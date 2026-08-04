@@ -45,7 +45,6 @@ function _checkpoint_module.read(path)
 		local text = file.read(file, "*a")
 		file.close(file)
 		if not text then
-			-- Unfortunately `file.read()` doesn't return an error string.
 			return false, absolute_path .. ": Failed to read file"
 		end
 
@@ -56,10 +55,10 @@ function _checkpoint_module.read(path)
 
 		return data
 
-	-- Handle binary files, which is the default case.
+	-- Handle binary files.
 	else
 		-- Check if the file exists manually.
-		-- Otherwise, `sys.load()` returns an empty table instead of an error string.
+		-- Otherwise `sys.load()` returns an empty table instead of an error string.
 		if not _checkpoint_module.exists(path) then
 			return false, absolute_path .. ": No such file or directory"
 		end

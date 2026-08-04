@@ -1,14 +1,23 @@
 local _checkpoint_module = require("checkpoint.checkpoint")
 
 function init()
+	-- Start by listing all file paths inside the root save directory.
+	-- On first run, this will print an empty table.
+	-- On other runs, this will print a table with two entries.
 	pprint("List file paths:")
 	pprint(_checkpoint_module.list())
 
+	-- Next, print the time value that was saved to the files.
+	-- On first run, this will fail.
+	-- On other runs, this will print a table with one entry.
 	pprint("Read from time.bin file:")
 	pprint(_checkpoint_module.read("dir_1/dir_2/time.bin"))
 	pprint("Read from time.json file:")
 	pprint(_checkpoint_module.read("dir_1/dir_2/time.json"))
 
+	-- Next, print the new time value that will be saved to the files.
+	-- On first run, this will create the files and write to them.
+	-- On other runs, this will simply write to them.
 	local time = socket.gettime()
 	pprint("Write to time.bin file: " .. time)
 	pprint(_checkpoint_module.write("dir_1/dir_2/time.bin", { time = time }))
